@@ -3,9 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 function Show(props) {
   const { id } = useParams();
   const foods = props.foods;
-  const food = foods.find((p) => p._id === id);
+  const food = foods.find((p) => p._id === id) || {}
   let navigate = useNavigate();
-
+ console.log(foods)
   const [editForm, setEditForm] = useState(food);
 
   // handleChange function for form
@@ -18,19 +18,19 @@ function Show(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.updateFoods(editForm, id);
+    props.updateFood(editForm, id);
     navigate('/');
   };
 
   const removeFoods = () => {
-    props.deleteFoods(id);
+    props.deleteFood(id);
     navigate('/');
   };
 
   return (
     <div className="food-edit">
       <h1>{food.name}</h1>
-      <h2>{food.Ingredients}</h2>
+      <h2>{food.ingredients}</h2>
       <img src={food.image} alt={food.name} />
 
       <br />
@@ -40,7 +40,7 @@ function Show(props) {
       </button>
 
       <br />
-      
+
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -58,9 +58,9 @@ function Show(props) {
         />
         <input
           type="text"
-          value={editForm.Ingredients}
-          name="Ingredients"
-          placeholder="Ingredients"
+          value={editForm.ingredients}
+          name="ingredients"
+          placeholder="ingredients"
           onChange={handleChange}
         />
         <input type="submit" value="Update Recipe" />

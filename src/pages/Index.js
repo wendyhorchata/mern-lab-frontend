@@ -22,7 +22,7 @@ export default function Index(props) {
             ingredients: '',
         })
     }
-
+    console.log(props.foods)
     // loaded function
     const loaded = () => {
         return props.foods.map((food) => (
@@ -31,42 +31,42 @@ export default function Index(props) {
                     <h1>{food.name}</h1>
                 </Link>
                 <img src={food.image} alt={food.name} />
-                <h3> {food.Ingredients} </h3> 
+                <h3> {food.ingredients} </h3>
             </div>
         ))
     }
-    
+
 
     const loading = () => <h1>Loading...</h1>
 
     return (
         <section>
             <form onSubmit={handleSubmit}>
-                <input 
-                type="text"
-                value={newForm.name}
-                name="name"
-                placeholder="Name"
-                onChange={handleChange}
-              />
-              <input
-               type="text"
-               value={newForm.image}
-               name="image"
-               placeholder="Image URL"
-               onChange={handleChange}
-                 />
-             <input
+                <input
                     type="text"
-                    value={newForm.Ingredients}
-                    name="Ingredients"
-                    placeholder="Ingredients"
+                    value={newForm.name}
+                    name="name"
+                    placeholder="Name"
                     onChange={handleChange}
-                     />
-             <input type="submit" value="Create Receipe" />
+                />
+                <input
+                    type="text"
+                    value={newForm.image}
+                    name="image"
+                    placeholder="Image URL"
+                    onChange={handleChange}
+                />
+                <input
+                    type="text"
+                    value={newForm.ingredients}
+                    name="ingredients"
+                    placeholder="ingredients"
+                    onChange={handleChange}
+                />
+                <input type="submit" value="Create Receipe" />
             </form>
             <div className="food-container">
-            {props.food ? loaded() : loading()}
+                {props.foods ? loaded() : loading()}
             </div>
         </section>
     )

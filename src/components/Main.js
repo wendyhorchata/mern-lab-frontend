@@ -2,17 +2,18 @@ import { useEffect, useState } from "react"
 import { Routes, Route } from "react-router-dom"
 import Index from "../pages/Index"
 import Show from "../pages/Show"
-import CreateFood from "../pages/CreateFood"
+
 
 function Main(props) {
 
-  const [food, setFood] = useState(null)
+  const [food, setFood] = useState([])
   const URL = process.env.API_URL || 'https://wo-mern-lab-backend.herokuapp.com/food'
 
   const getFood = async () => {
     const response = await fetch(URL);
     const data = await response.json();
     setFood(data);
+    console.log(data)
   }
 
   const createFood = async (food) => {
@@ -28,7 +29,7 @@ function Main(props) {
 
 
   const updateFood = async (food, id) => {
-    await fetch(URL + id, {
+    await fetch(URL +  "/" + id, {
       method: 'PUT',
       headers: {
         'Content-Type': 'Application/json',
@@ -41,7 +42,7 @@ function Main(props) {
 
 
   const deleteFood = async (id) => {
-    await fetch(URL + id, {
+    await fetch(URL +  "/" + id, {
       method: "DELETE",
     })
     getFood()
@@ -60,14 +61,12 @@ function Main(props) {
           path="/"
           element={<Index foods={food} createFoods={createFood} />}
         />
-        <Route path="/food/:id" element={
+        <Route path="/foods/:id" element={
           <Show
-            food={food}
+            foods={food}
             deleteFood={deleteFood}
             updateFood={updateFood} />
         } />
-        <Route path= "/create/food" element={<CreateFood></CreateFood>}>
-        </Route>
       </Routes>
     </main>
   )
